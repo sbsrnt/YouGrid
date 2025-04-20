@@ -1,12 +1,27 @@
 name: "Submit to Web Store"
+
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
+
+  build:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -14,14 +29,15 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
-      - uses: pnpm/action-setup@v2.2.4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
           version: latest
           run_install: true
-      - name: Use Node.js 16.x
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v3.4.1
         with:
-          node-version: 16.x
+          node-version: 20.x
           cache: "pnpm"
       - name: Build the extension
         run: pnpm build

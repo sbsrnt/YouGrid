@@ -1,31 +1,34 @@
 {
-  "name": "yt-grid-col",
-  "displayName": "Yt grid col",
+  "name": "YouGrid",
+  "displayName": "YouGrid",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "Instantly switch YouTube’s video grid to 1–5 columns—no reload, no fuss. Custom‑fit your home page in a click.",
   "author": "Sebastian Krzyzanowski <eskrzy@gmailcom>",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "check": "biome check  --write ./"
   },
   "dependencies": {
+    "@plasmohq/storage": "^1.15.0",
+    "clsx": "^2.1.1",
     "plasmo": "0.90.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@biomejs/biome": "^1.9.4",
     "@types/chrome": "0.0.258",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
-    "prettier": "3.2.4",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "3",
     "typescript": "5.3.3"
   },
   "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ]
+    "host_permissions": ["https://www.youtube.com/*"]
   }
 }
